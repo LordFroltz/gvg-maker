@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LAG GVG MAKER - By Froltz</title>
+    <link rel="icon" 
+    href="https://drive.google.com/uc?export=view&id=15mH3ugjsnqRgCKtYyW94mAQSaHS_SfwT">
+    <link href="http://fonts.cdnfonts.com/css/road-rage" rel="stylesheet">
+    <style>
+        @import url('http://fonts.cdnfonts.com/css/road-rage');
+        body {background-color: #2b2d31; color: #ffffff; overflow: hidden; font-family: sans-serif;}
+        p {margin: 0;}
+        .wrapper {height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center; flex-direction: column;}
+        .gvglogo {margin-bottom: -20px;}
+        .gvglogo img {max-width: 100px;}
+        .heading {position: relative; font-family: 'Road Rage', sans-serif; padding: 20px; font-size: 4.2rem; margin: 0; color: #FFCD76; background: rgb(255, 203, 115); background: -moz-linear-gradient(0deg, rgba(255, 203, 115, 1) 0%, rgba(255, 223, 157, 1) 100%); background: -webkit-linear-gradient(0deg, rgba(255, 203, 115, 1) 0%, rgba(255, 223, 157, 1) 100%); background: linear-gradient(0deg, rgba(255, 203, 115, 1) 0%, rgba(255, 223, 157, 1) 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffcb73", endColorstr="#ffdf9d", GradientType=1); background-size: cover; -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+        .heading::before {position: absolute; content: 'LAG GVG Maker'; text-shadow: 0 0 20px black; z-index: -1;}
+        .heading::after {position: absolute; content: 'by FROLTZ'; color: #38393f; font-size: 20px; bottom: 12px; right: 25px; display: inline-block; -webkit-text-fill-color: #38393f;}
+        .capture-wrapper {border: 1px solid rgba(0, 0, 0, .5); background-color: #36393f;}
+        .title {font-family: 'Road Rage', sans-serif; font-size: 3.8rem; color: #FFCD76; text-shadow: 0 0 10px black; display: flex; align-items: center; text-transform: uppercase; padding-bottom: 20px;}
+        .smaller {font-size: 2.6rem; margin: 0 30px;}
+        .date {font-size: 1.2rem; text-transform: uppercase; color: #FFCD76; padding-bottom:10px;}
+        .timezones {text-transform: uppercase; color: #FFCD76; padding-bottom:10px;}
+        .react {color: #536779;}
+        input:first-of-type {margin: 20px 0;}
+        input {font-family: sans-serif; margin: 0 0 20px; width: 400px; text-align: center; height: 50px; border: 0; text-transform: uppercase; background: #36393f; color: #999999;}
+        input:focus-visible {outline: none;}
+        input::placeholder {text-align: center;}
+        button {font-family: 'Road Rage', sans-serif; border: none; padding: 10px 15px; background: rgb(255, 203, 115); background: -moz-linear-gradient(0deg, rgba(255, 203, 115, 1) 0%, rgba(255, 223, 157, 1) 100%); background: -webkit-linear-gradient(0deg, rgba(255, 203, 115, 1) 0%, rgba(255, 223, 157, 1) 100%); background: linear-gradient(0deg, rgba(255, 203, 115, 1) 0%, rgba(255, 223, 157, 1) 100%); filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffcb73", endColorstr="#ffdf9d", GradientType=1); cursor: pointer;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <p class="gvglogo"><img src="https://drive.google.com/uc?export=view&id=15mH3ugjsnqRgCKtYyW94mAQSaHS_SfwT"></p>
+        <h1 class="heading">LAG GVG Maker</h1>
+        <div class="capture-wrapper">
+            <div id="capture"
+                style="height: 275px; width: 500px; background-color: #36393f; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <p class="title" style="display: flex; justify-content: center; align-items: center;"><span>LAG</span> <span class="smaller">vs</span> <span id="comp">TAG</span></p>
+                <p class="date" id="date">DAY, dd/mm/yyyy</p>
+                <p class="timezones">AEST: <span id="aest">00:00 AM/PM</span> - CST: <span id="cst">00:00 AM/PM</span></p>
+                <p class="react">React with ✅ or ❌ then select your main class.</p>
+            </div>
+        </div>
+        <input id="tag" type="text" onkeyup="enemy()" placeholder="Enter Guild TAG Here" onfocus="this.placeholder = ''"
+            maxlength="4">
+        <input id="timeInput" type="datetime-local" onchange="aest()" placeholder="Enter AEST Time Here" onfocus="this.placeholder = ''">
+        <a id="link"></a>
+        <button onclick="save()">Save Image</button>
+    </div>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script>
+        function enemy() {
+            var enemy = document.querySelector('#tag').value;
+            document.querySelector('#comp').innerHTML = enemy;
+        };
+        function aest() {
+            var aest = document.querySelector('#timeInput').value;
+            var timeZone = new Date(aest);
+            var date = timeZone.toLocaleDateString('en-AU', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            var aestTime = timeZone.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            document.querySelector('#date').innerHTML = date;
+            document.querySelector('#aest').innerHTML = aestTime;
+            timeZone.setHours(timeZone.getHours()-15);
+            timeZone.setMinutes(timeZone.getMinutes());
+            document.querySelector('#cst').innerHTML = timeZone.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        };
+        function save() {
+            var enemy = document.querySelector('#tag').value;
+            var time = document.querySelector('#timeInput').value;
+            if(enemy && time) {
+            var comp = document.querySelector('#comp').textContent.toUpperCase();
+            var aest = document.querySelector('#timeInput').value;
+            var timeZone = new Date(aest);
+            var date = timeZone.toLocaleDateString('en-AU', {year: 'numeric', month: 'numeric', day: 'numeric' });
+            var link = document.querySelector('#link');
+            html2canvas(document.querySelector("#capture")).then(canvas => {
+                link.setAttribute('download', `LAG-vs-${comp}-${date}.png`);
+                link.setAttribute('href', canvas.toDataURL("image/png").replace("image/png", "image/octet-stream"));
+                link.click();
+            });
+            } else {
+                alert("Please Enter a Guild Tag and Time");
+            }
+        };
+    </script>
+</body>
+</html>
